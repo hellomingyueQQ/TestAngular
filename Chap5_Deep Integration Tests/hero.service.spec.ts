@@ -25,11 +25,14 @@ describe('HeroService', () => {
 
     describe('getHero', () => {
         it('should call get with the correct URL', () => {
-            service.getHero(4).subscribe();
+            service.getHero(4).subscribe(hero=>{
+                expect(hero.id).toBe(4);
+            });
 
             const req = httpTestingController.expectOne('api/heroes/4')
 
-            req.flush({id: 4, name: 'SuperDude', strength: 100})
+            req.flush({id: 4, name: 'SuperDude', strength: 100});
+            expect(req.request.method).toBe("GET");
             httpTestingController.verify();
         })
     })
